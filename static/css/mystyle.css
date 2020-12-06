@@ -1,19 +1,18 @@
 body { 
   font-family : 'Roboto', serif;
-  background-color :ghostwhite;
+  background-color :#dcd0ff;
 }
 
 a { 
-  color : purple;
+  color : black;
 }
 
 a:hover {
   color : rgb(87, 8, 87);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 a#video-list-item {
-  text-decoration: underline;
 }
 
 .btn {
@@ -25,7 +24,7 @@ a#video-list-item {
 }
 
 .card-header{
-  background-color: thistle;
+  background-color: ghostwhite;
 }
 
 
@@ -34,7 +33,7 @@ a#video-list-item {
     color: black ;
     text-align: left;
     padding: 10px;
-    font-family : 'Roboto Slab', serif;
+    font-family : 'Montserrat', sans-serif;
 }
 
 
@@ -88,13 +87,13 @@ a#video-list-item {
 }
 
 .dropdown{
-border: 0.1em solid black;
+border: 0.2em solid black;
 width: 50%;
 margin-bottom: 1em;
 }
 
 .dropdown .title{
-margin: .3em .3em .3em .3em;	
+margin: .3em .3em .3em .3em;
 width: 100%;
 }
 
@@ -116,7 +115,7 @@ margin-top: 0.3em;
 }
 
 .dropdown .menu .option:hover{
-background: rgba(0,0,0,0.2);
+background: rgba(255,255,255,0.4);
 }
 
 .pointerCursor:hover{
@@ -130,23 +129,28 @@ transform: rotate(90deg);
 
 
 /* Tab */
+nav {
+  border : 1px solid red;
+}
+
+.header {
+  border: 1px solid blue;
+}
+.menubar{
+  border : 1px solid blue;
+  font-family : "Monserrat", sans-serif;
+  font-size : 1.2em;
+  text-align : center;
+ }
 
 .tab {
-  margin: auto;
-  width: 50%;
-  border: 3px solid green;
+  text-align : center;
   /* padding: 10px */
-}
-.tab div {
-  width:50%;
-  margin:auto;
-  border : 1px solid blue;
 }
 /* Style the buttons that are used to open the tab content */
 .tab button {
   background-color: inherit;
   text-align: center;
-  border: 1px solid red;
   outline: none;
   cursor: pointer;
   margin:auto;

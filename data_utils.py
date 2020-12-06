@@ -27,6 +27,7 @@ def join_timestamps(comment_dict):
     for t in merged_timestamp_list : 
         processed_timestamp_comment[t] = []
         t_range = [t-3, t-2, t-1, t, t+1, t+2, t+3]
+        # t_range = [t-2, t-1, t, t+1, t+2]
         for t_ in t_range : 
             try : 
                 processed_timestamp_comment[t].extend(comment_dict[t_])

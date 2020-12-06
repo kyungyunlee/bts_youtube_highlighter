@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="dropdown">
+        <div class="title pointerCursor">Select an option <i class="fa fa-angle-right"></i></div>
+        <div class="menu pointerCursor hide">
+            <div class="option" id="option1">
+                   ARMY's favorite moments 
+            </div>
+            <div class="option" id="option2">
+                    Popular keywords
+            </div>
+            <div class="option" id="option3">
+                    Sentiment analysis
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <span id="result">The result is : </span> -->
+
+    <h4 id="result">  </h4>
+    <!-- <div class="container" id="keywords">
+        <h4 > Keywords </h4>
+        <div>
+            {{ keywords }}
+        </div>
+    </div> -->
+
+
+    <!-- <h4> Popular frames </h4> -->
+    <div id="popular_frames">
+        {% for pair in most_commented_scenes %}
+
+            <iframe id="analysis" type="text/html" width="320" height="180"
+  src="https://www.youtube.com/embed/{{ pair[1] }}?start={{ pair[2] }}"
+   frameborder="0"></iframe>
+
+           <p>
+                {{ pair[0] }} 
+           </p>
+           <p> at {{ pair[2] }} second, {{ pair[3] }} comments </p>
+        {% endfor %}
+    </div>
+
+
+    <div id="keywords" style="display:none;">
+        {{ keywords }}
+    </div>
+
+
+
+    <div id="sentiment_count" style="display:none;">
+        {{ sentiment_score_count }}
+    </div>
+
+{% endblock %}

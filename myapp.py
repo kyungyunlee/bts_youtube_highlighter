@@ -1,5 +1,6 @@
 import os 
 import csv 
+from pathlib import Path
 from flask import Flask, render_template, request, jsonify, url_for 
 from collections import defaultdict 
 from data_utils import join_timestamps, get_timestamp_list  
@@ -39,7 +40,7 @@ def preprocess () :
                     if data_path in all_video_fs : 
                         continue 
 
-                    all_video_fs.append((playlist_name, data_path))
+                    all_video_fs.append(data_path)
                     valid_video_titles.append((title, yt_id))
                     all_video_comment_list.append((title, data_path, len(vid_comments)))
                     
@@ -72,21 +73,29 @@ def general_analysis():
     #######  Most commented video ########
     # Per video, thumbnail, number of comment counts 
     sorted_vid = sorted(all_video_comment_list, key=lambda x:x[2], reverse=True)
+
+    most_commented_videos = [] 
     for vid in sorted_vid[:10]:
-        print (vid[0], vid[1], len(vid[2])) 
+        most_commented_videos.append((vid[0], Path(vid[1]).stem, vid[2]))
 
     ########  Most commented scenes #########
     # Per clip, get a thumbnail gif, title, display keywords, number of comments, sample comments  
     sorted_comment = sorted(all_ts_comment_list, key=lambda x: x[3], reverse=True)
-
+    
+    most_commented_scenes = [] 
     for vid in sorted_comment[:10]:
-        print (vid[0], vid[1], vid[2], len(vid[3]))
+        curr_title = vid[0]
+        curr_yt_id = Path(vid[1]).stem 
+        curr_timestamp = vid[2]
+        curr_n_comments = vid[3] 
+        curr_comments = yt_id_to_comment_dict[curr_yt_id][curr_timestamp] 
+        most_commented_scenes.append((curr_title, curr_yt_id, curr_timestamp, curr_n_comments, curr_comments))
 
     # Top keywords 
 
     # Sentiment analysis 
 
-    return 
+    return render_template('analysis.html', most_commented_videos=most_commented_videos, most_commented_scenes=most_commented_scenes) 
 
 @app.route('/video')
 def video_index_page():

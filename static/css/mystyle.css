@@ -1,0 +1,185 @@
+body { 
+  font-family : 'Roboto', serif;
+  background-color :ghostwhite;
+}
+
+a { 
+  color : purple;
+}
+
+a:hover {
+  color : rgb(87, 8, 87);
+  text-decoration: none;
+}
+
+a#video-list-item {
+  text-decoration: underline;
+}
+
+.btn {
+  color : black;
+}
+
+.btn:hover {
+  color :purple;
+}
+
+.card-header{
+  background-color: thistle;
+}
+
+
+/* main title */
+#title {
+    color: black ;
+    text-align: left;
+    padding: 10px;
+    font-family : 'Roboto Slab', serif;
+}
+
+
+#search-video-container {
+  text-align: center;
+  margin : none;
+  border :  0.1em solid black;
+}
+
+#player {
+  width : 50%;
+  border : 1px solid blue;
+}
+#dist_graph{
+  width : 100%;
+  border : 1px solid red;
+  text-align : center;
+}
+
+
+  /* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
+
+
+
+
+
+
+/* Dropdown */
+.hide {
+  max-height: 0 !important;
+}
+
+.dropdown{
+border: 0.1em solid black;
+width: 50%;
+margin-bottom: 1em;
+}
+
+.dropdown .title{
+margin: .3em .3em .3em .3em;	
+width: 100%;
+}
+
+.dropdown .title .fa-angle-right{
+float: right;
+margin-right: .7em;
+transition: transform .3s;
+}
+
+.dropdown .menu{
+transition: max-height .5s ease-out;
+max-height: 20em;
+overflow: hidden;
+}
+
+.dropdown .menu .option{
+margin: .3em .3em .3em .3em;
+margin-top: 0.3em;
+}
+
+.dropdown .menu .option:hover{
+background: rgba(0,0,0,0.2);
+}
+
+.pointerCursor:hover{
+cursor: pointer;
+}
+
+.rotate-90{
+transform: rotate(90deg);
+}
+
+
+
+/* Tab */
+
+.tab {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  /* padding: 10px */
+}
+.tab div {
+  width:50%;
+  margin:auto;
+  border : 1px solid blue;
+}
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  text-align: center;
+  border: 1px solid red;
+  outline: none;
+  cursor: pointer;
+  margin:auto;
+  /* padding: 14px 16px; */
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+
+
+
+
+
+
+/* dist graph */
+#dist_graph {
+  padding : 10%;
+
+}

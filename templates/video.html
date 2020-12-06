@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- <input type="text" placeholder="Search.."> -->
+<!-- 왼쪽에 유튭 제목 리스트 나열해서 고를 수 있게. 그리고 search도 가능하게 -->
+
+
+
+<div class="accordion" id="accordionExample">
+   
+  {% for pair in playlist_list %}
+  <div class="card">
+
+    <div class="card-header" id="section_{{ pair[0] }}">
+      <h5 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ pair[0] }}" aria-expanded="true" aria-controls="collapseOne">
+          {{ pair[0] }} 
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapse_{{ pair[0]}}" class="collapse" aria-labelledby="section_{{ pair[0] }}" data-parent="#accordionExample">
+      <div class="card-body">
+        <ul>
+        {% for vid_id in pair[1] %}
+          <li><a href="/video/{{vid_id[1]}}" id="video-list-item">{{ vid_id[0] }} </a></li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  {% endfor %}
+
+</div>
+
+
+<div class="container" id="search-video-container"> 
+
+  <h4>
+      YouTube video link: 
+      <a href="https://www.youtube.com/watch?v={{ youtube_id }} ">
+        {{ youtube_id }}
+      </a>
+  </h4>
+
+  <div id="video_keywords">
+    {{ keywords }}
+  </div>
+
+  <div  id="player">{{ youtube_id }}</div>
+  <div  id="dist_graph"></div>
+</div>
+
+<div id="duration" style="display:none;"></div>
+
+<div id="comments">
+  {{ comments | tojson }}
+</div>
+
+
+<div id="counts" style="display:none;">
+  {{ counts }}
+</div>
+
+{% endblock %}

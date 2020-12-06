@@ -13,14 +13,15 @@
   <div class="card">
 
     <div class="card-header" id="section_{{ pair[0] }}">
-      <h5 class="mb-0">
+      <div class="mb-0">
         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ pair[0] }}" aria-expanded="true" aria-controls="collapseOne">
+          <i class="fa fa-plus" style="color:black" ></i>
           {{ pair[0] }} 
         </button>
-      </h5>
+      </div>
     </div>
 
-    <div id="collapse_{{ pair[0]}}" class="collapse" aria-labelledby="section_{{ pair[0] }}" data-parent="#accordionExample">
+    <div id="collapse_{{ pair[0]}}" class="inside collapse" aria-labelledby="section_{{ pair[0] }}" data-parent="#accordionExample">
       <div class="card-body">
         <ul>
         {% for vid_id in pair[1] %}

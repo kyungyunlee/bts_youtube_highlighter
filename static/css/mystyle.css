@@ -3,6 +3,10 @@ body {
   background-color :#dcd0ff;
 }
 
+.mainbody { 
+  padding-top : 2%;
+}
+
 a { 
   color : black;
 }
@@ -15,17 +19,7 @@ a:hover {
 a#video-list-item {
 }
 
-.btn {
-  color : black;
-}
 
-.btn:hover {
-  color :purple;
-}
-
-.card-header{
-  background-color: ghostwhite;
-}
 
 
 /* main title */
@@ -47,6 +41,7 @@ a#video-list-item {
   width : 50%;
   border : 1px solid blue;
 }
+
 #dist_graph{
   width : 100%;
   border : 1px solid red;
@@ -79,8 +74,6 @@ a#video-list-item {
 
 
 
-
-
 /* Dropdown */
 .hide {
   max-height: 0 !important;
@@ -90,6 +83,10 @@ a#video-list-item {
 border: 0.2em solid black;
 width: 50%;
 margin-bottom: 1em;
+font-family : "Montserrat", sans-serif;
+font-weight : 600;
+font-size : 1.5em;
+text-align : center;
 }
 
 .dropdown .title{
@@ -130,18 +127,19 @@ transform: rotate(90deg);
 
 /* Tab */
 nav {
-  border : 1px solid red;
+  font-family : "Montserrat", sans-serif;
 }
 
-.header {
-  border: 1px solid blue;
+
+.navbar-brand { 
+  font-size: 1.3em;
+  font-weight: 600;
 }
-.menubar{
-  border : 1px solid blue;
-  font-family : "Monserrat", sans-serif;
-  font-size : 1.2em;
-  text-align : center;
- }
+
+.navbar-nav{
+  font-weight:600;
+}
+
 
 .tab {
   text-align : center;
@@ -179,11 +177,40 @@ nav {
 
 
 
-
-
-
-/* dist graph */
-#dist_graph {
-  padding : 10%;
-
+/* accordion */
+.accordion { 
 }
+
+.accordion .fa{
+        margin-right: 0.5rem;
+    }
+.card-header { 
+  font-family : "Montserrat", sans-serif;
+  font-weight : 600;
+  background-color :#dcd0ff;
+  border-radius: 0px;
+  padding : 0.2em;
+  border: 0.2em solid black;
+} 
+
+.inside { 
+  border: 0.2em solid black;
+}
+
+
+.card-header .btn {
+  border-radius: 0px;
+  font-size : 0.7em;
+  font-weight: 600;
+  color : black;
+  border: none;
+}
+
+.card {
+  border-radius: 0px;
+  border : none;
+}
+
+
+
+

@@ -6,7 +6,9 @@ playlist_ids = {
                 # 'PL_Cqw69_m_yz4JcOfmZb2IDWwIuej1xfN' : 'bighit_official_movie',
                 # 'PL5hrGMysD_Gt2ekpVt25B6C5ozZjVxQdh' : 'bangtantv_bts_episode',
                 # 'PL5hrGMysD_GvZPFPcdm9NCqKfQKPYrkFh' : 'bangtantv_bts_festa',
-                'PL5hrGMysD_Gu2a7-KuaQTxjRVPqM2Bi63' : 'bangtantv_bangtan_bomb',
+                # 'PL5hrGMysD_Gu2a7-KuaQTxjRVPqM2Bi63' : 'bangtantv_bangtan_bomb',
+                # 'PL5hrGMysD_GusQlLU7C06Vyklhw_HjFra' : 'bangtantv_bts_practice_video'
+
                 # 'PL4T4Wu4qBZboYGqjpzkQ7qgQ5MeQCybx0' : 'KOOKIESTAETAS',
                 # 'PL9p8yN6ZWWFgZtDeSabsaQbge20cWDscO' : 'Pinkkoyaa' ,
                 # 'PLHNTFLeAcw9WFJDFYaDT_8r7JJYKEIWPg' : 'Jungkook97',
@@ -32,7 +34,7 @@ service = build_service(apikey)
 
 for curr_playlist_id, playlist_name in playlist_ids.items() :  
 
-    with open(f'./static/data/playlists/{playlist_name}.txt','w') as playlist_f: 
+    with open(f'../static/data/playlists/{playlist_name}.txt','w+') as playlist_f: 
 
         playlistitems_list_response = service.playlistItems().list(
                 playlistId=curr_playlist_id, 

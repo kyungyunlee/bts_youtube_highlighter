@@ -12,16 +12,17 @@
   {% for pair in playlist_list %}
   <div class="card">
 
-    <div class="card-header" id="section_{{ pair[0] }}">
+    <div class="card-header collapsed" id="section_{{ pair[0] }}">
       <div class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ pair[0] }}" aria-expanded="true" aria-controls="collapseOne">
-          <i class="fa fa-plus" style="color:black" ></i>
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ pair[0] }}" aria-expanded="true" aria-controls="collapse_{{pair[0]}}">
+          <i class="fa fa-plus"></i>
+          <i class="fa fa-minus" style="display: none"></i>
           {{ pair[0] }} 
         </button>
       </div>
     </div>
 
-    <div id="collapse_{{ pair[0]}}" class="inside collapse" aria-labelledby="section_{{ pair[0] }}" data-parent="#accordionExample">
+    <div id="collapse_{{ pair[0]}}" class="inside panel-collapse collapse" aria-labelledby="section_{{ pair[0] }}" data-parent="#accordionExample">
       <div class="card-body">
         <ul>
         {% for vid_id in pair[1] %}
@@ -34,6 +35,12 @@
   </div>
   {% endfor %}
 
+</div>
+
+
+
+<div class="container">
+  <p>Data collected as of Dec 5th 2020</p>
 </div>
 
 

@@ -3,19 +3,32 @@ import csv
 from pathlib import Path
 from flask import Flask, render_template, request, jsonify, url_for 
 from collections import defaultdict 
-from data_utils import join_timestamps, get_timestamp_list  
+import pickle
+from wordcloud import WordCloud, STOPWORDS 
+import numpy as np
+from matplotlib import cm
+from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+
+from data_utils import join_timestamps, get_timestamp_list, create_word_frequency_table 
 
 ###### GLOBAL VARIABLE #######
-playlists = ['bangtantv_bangtan_bomb', 'bangtantv_bts_episode', 'bangtantv_bts_festa']
+playlists = ['bangtantv_bangtan_bomb', 'bangtantv_bts_episode', 'bangtantv_bts_festa'] # , 'bangtantv_bts_practice_video']
 all_video_fs = [] 
+n_comments_list = [] 
+comments_list = [] 
 playlist_to_vid = [] # list of (playlist_name, list of videos)
 all_video_comment_list = [] # list of (video_title, video_comment_file, comment_count)
 all_ts_comment_list = [] # list of (video_title, video_comment_file, timestamp, comment_count)
 all_video_sentiment_list = [] # list of video sentiment data files 
 yt_id_to_comment_dict = {} 
-
+word_freq_list = [] 
+wordcloud_f = 'static/wordcloud.png'
 
 def preprocess () : 
+    global all_video_fs, n_comments_list, comments_list
+    global playlist_to_vid, all_video_comment_list, all_ts_comment_list, all_vdeo_sentiment_list
+    global yt_id_to_comment_dict
+    global word_freq_list 
     for playlist_name in playlists :
         playlist_video_count = 0 
         lines = open(f'static/data/playlists/{playlist_name}.txt').readlines()
@@ -41,6 +54,8 @@ def preprocess () :
                         continue 
 
                     all_video_fs.append(data_path)
+                    n_comments_list.append(len(vid_comments))
+                    comments_list.extend(vid_comments)
                     valid_video_titles.append((title, yt_id))
                     all_video_comment_list.append((title, data_path, len(vid_comments)))
                     
@@ -54,6 +69,42 @@ def preprocess () :
         
         playlist_to_vid.append((playlist_name, valid_video_titles))
         print (f"Number of videos for {playlist_name} :", playlist_video_count)
+
+
+    # Load word frequency list  
+    word_freq_f = 'static/word_freq.pkl' 
+    if not os.path.exists(word_freq_f):
+        print ("Computing word frequency")
+        word_freq_list = create_word_frequency_table(comments_list) 
+        pickle.dump(word_freq_list, open(word_freq_f, 'wb'))
+        # Make wordcloud 
+        print ("Making wordcloud")
+        keyword_dict = {}
+        for keyword in word_freq_list:
+            keyword_dict[keyword[0]] = keyword[1]
+
+        top = cm.get_cmap('Purples', 128)
+        bottom = cm.get_cmap('Blues', 128)
+
+        newcolors = np.vstack((top(np.linspace(0.5, 1, 200)),
+                            bottom(np.linspace(0.5, 1, 56))))
+        newcmp = ListedColormap(newcolors, name='OrangeBlue')
+
+        wordcloud = WordCloud(width = 800, height = 800,
+                        background_color="rgba(255,255,255,0)",
+                        mode="RGBA",
+                        colormap=newcmp,
+                        min_font_size = 10,
+                        max_words=10000,
+                        font_path="static/Montserrat-Regular.otf",
+                        repeat=False).generate_from_frequencies(keyword_dict) 
+
+        wordcloud.to_file(wordcloud_f)
+
+
+    else :
+        print ("already computed")
+        word_freq_list = pickle.load(open(word_freq_f,'rb'))
 
 
 preprocess() 
@@ -70,6 +121,12 @@ def about_page():
 
 @app.route('/analysis')
 def general_analysis():
+    global word_freq_list 
+
+    n_videos = len(all_video_fs)
+    avg_comments = round(sum(n_comments_list) / len(n_comments_list),1)
+
+
     #######  Most commented video ########
     # Per video, thumbnail, number of comment counts 
     sorted_vid = sorted(all_video_comment_list, key=lambda x:x[2], reverse=True)
@@ -81,21 +138,23 @@ def general_analysis():
     ########  Most commented scenes #########
     # Per clip, get a thumbnail gif, title, display keywords, number of comments, sample comments  
     sorted_comment = sorted(all_ts_comment_list, key=lambda x: x[3], reverse=True)
-    
+    print (len(sorted_comment)) 
     most_commented_scenes = [] 
-    for vid in sorted_comment[:10]:
+    for vid in sorted_comment[:30]:
         curr_title = vid[0]
         curr_yt_id = Path(vid[1]).stem 
-        curr_timestamp = vid[2]
+        curr_timestamp = vid[2] 
         curr_n_comments = vid[3] 
         curr_comments = yt_id_to_comment_dict[curr_yt_id][curr_timestamp] 
+        # subtract 3 seconds for the video start time 
+        curr_timestamp = str(int(curr_timestamp) - 3) 
         most_commented_scenes.append((curr_title, curr_yt_id, curr_timestamp, curr_n_comments, curr_comments))
 
     # Top keywords 
-
+    keywords = word_freq_list[:50]
+    
     # Sentiment analysis 
-
-    return render_template('analysis.html', most_commented_videos=most_commented_videos, most_commented_scenes=most_commented_scenes) 
+    return render_template('analysis.html', n_videos=n_videos, avg_comments=avg_comments, most_commented_videos=most_commented_videos, most_commented_scenes=most_commented_scenes, keywords=keywords, wordcloud_f=wordcloud_f) 
 
 @app.route('/video')
 def video_index_page():
@@ -104,10 +163,11 @@ def video_index_page():
 
 @app.route('/video/<youtube_id>', methods=['GET', 'POST'])
 def show_video_data(youtube_id):
-    comment_dict = yt_id_to_comment_dict[youtube_id]
-    timestamp_list = get_timestamp_list(comment_dict)
+    curr_comment = yt_id_to_comment_dict[youtube_id]
+    timestamp_list = get_timestamp_list(curr_comment)
+    n_comments = len(timestamp_list)
 
-    return render_template('video.html', playlist_list=playlist_to_vid, youtube_id=youtube_id, comments=comment_dict, counts=timestamp_list) 
+    return render_template('video.html', playlist_list=playlist_to_vid, youtube_id=youtube_id, comments=curr_comment, counts=timestamp_list, n_comments=n_comments) 
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)

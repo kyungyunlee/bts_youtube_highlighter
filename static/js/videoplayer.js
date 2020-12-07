@@ -191,6 +191,12 @@ function plot_hist(duration) {
     .call(d3.axisBottom(x))
     .attr("align", "center");
 
+
+    svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("transform", "translate(" + (width/2) + "," + (height + margin.top ) + ")")
+      .text("Time(sec)");
+
     var y = d3
     .scaleLinear()
     .range([height, 0])
@@ -208,9 +214,9 @@ function plot_hist(duration) {
     .append("div")
     .style("opacity", 0)
     .attr("class", "tooltip")
-    .style("background-color", "black")
+    .style("background-color", "#3c1361")
     .style("color", "white")
-    .style("border-radius", "5px")
+    .style("border-radius", "0px")
     .style("padding", "10px")
 
   // A function that change this tooltip when the user hover a point.

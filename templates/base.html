@@ -8,19 +8,29 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Noto+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" href="../static/css/mystyle.css" />
     <script src="https://d3js.org/d3.v6.min.js"></script>
 
-    <!-- <title>{% block title %} {% endblock %}</title> -->
-    <title>BTS Youtube Highlighter</title>
+
 
 
     <script>
     $(document).ready(function(){
+      /*
         // Add minus icon for collapse element which is open by default
+      $('.panel-collapse').on('show.bs.collapse', function () {
+        $(this).parent('.panel').find('.fa-minus').show();
+        $(this).parent('.panel').find('.fa-plus').hide();
+      })
+      $('.panel-collapse').on('hide.bs.collapse', function () {
+        $(this).parent('.panel').find('.fa-minus').hide();
+        $(this).parent('.panel').find('.fa-plus').show();
+      })
+        */
         $(".collapse.show").each(function(){
+      console.log("Asdfasfasdf");
           $(this).prev(".card-header").find(".fa").addClass("fa-minus").removeClass("fa-plus");
         });
         
@@ -32,7 +42,11 @@
         });
     });
 
-</script>
+
+    </script>
+
+    <!-- <title>{% block title %} {% endblock %}</title> -->
+    <title>BTS Youtube Highlighter</title>
 
   </head>
   <body>
@@ -76,6 +90,12 @@
     <div class="mainbody container">
         {% block content %} {% endblock %}
     </div>
+    
+    <div class="container"> 
+      <p>&copy;2020 Kyungyun Lee</p>
+    </div>
+  </body>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -85,5 +105,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/static/js/videoplayer.js"></script>
     <script src="/static/js/analysis.js"></script>
-  </body>
+
+
+
+
+
 </html>

@@ -1,4 +1,6 @@
 from collections import Counter 
+import re 
+import nltk
 
 
 def join_timestamps(comment_dict):
@@ -52,3 +54,61 @@ def get_timestamp_list(comment_dict):
         timestamp_counts.extend([int(k)] * len(v))
 
     return timestamp_counts
+
+
+
+def create_word_frequency_table(comment_list):
+    stopWords_en = nltk.corpus.stopwords.words("english")
+    stopWords_sp = nltk.corpus.stopwords.words("spanish")
+    stopWords = set(stopWords_en + stopWords_sp)
+    puncts = "'...,`;:?!''/-\\)(><][|&@#$%^*"
+    timepattern = "(?:([0-5]?[0-9]):)?([0-5]?[0-9]):([0-5][0-9])"
+    names = ['😂😂', '😂😂😂', '😂😂😂😂', '``', '...', '....', '.....', '--', 'rapmon','jeon', 'min', 'kim', 'park', 'yoongi', 'seokjin', 'hoseok', 'jimin', 'bts', 'jungkook', 'hobi', 'jin', 'v', 'j-hope', 'taehyung', 'kookie','jhope', 'tae', 'suga', 'rm', 'namjoon', 'jk']
+
+    
+    sentences = " ".join(comment_list)
+    words = nltk.tokenize.word_tokenize(sentences)
+    ps = nltk.stem.PorterStemmer()
+    freqTable = {}
+    for word in words :
+        stem_word = word 
+        stem_word = stem_word.lower()
+        if stem_word in puncts : 
+            continue 
+        elif stem_word in stopWords : 
+            continue 
+        elif stem_word in names : 
+            continue 
+        elif re.match(timepattern, stem_word):
+            continue 
+
+        elif stem_word in freqTable.keys():
+            freqTable[stem_word] +=1
+        else :
+            freqTable[stem_word] = 1 
+
+    sorted_dict = {k:v for k, v in sorted(freqTable.items(), key=lambda item:item[1], reverse=True)}
+    count = 0 
+    keywords = []
+
+    for k,v in sorted_dict.items():
+        if "'" in k or " " in k :
+            continue
+        if len(k) == 1 and (k!="v" or k!="V"):
+            continue
+        
+        if count > 2000:
+            break 
+
+        keywords.append((k,v))
+        count+=1
+        
+    return keywords 
+
+
+
+
+
+
+
+

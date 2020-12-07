@@ -19,6 +19,47 @@ a:hover {
 a#video-list-item {
 }
 
+.overview-metadata{
+  font-family : "Montserrat", sans-serif;
+  font-size:2em;
+  font-weight : 600;
+  text-align :left;
+  padding-top: 2%;
+}
+
+.overview-metadata a {
+  color : purple;
+} 
+
+.overview-metadata span {
+  color:purple;
+}
+
+p#title {
+  font-family : "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size : 1.3em;
+} 
+
+#keywords img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+h2.about {
+  font-family : "Noto Sans KR" ,"Montserrat", sans-serif;
+  font-weight: 600;
+  font-size:3em;
+}
+
+h2.about-en {
+  font-family : "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size:3em;
+}
+
 
 
 
@@ -46,6 +87,7 @@ a#video-list-item {
   width : 100%;
   border : 1px solid red;
   text-align : center;
+
 }
 
 
@@ -112,8 +154,10 @@ margin-top: 0.3em;
 }
 
 .dropdown .menu .option:hover{
-background: rgba(255,255,255,0.4);
+ /*background: rgba(255,255,255,0.4);*/
+  text-decoration : underline;
 }
+
 
 .pointerCursor:hover{
 cursor: pointer;
@@ -210,6 +254,7 @@ nav {
   border-radius: 0px;
   border : none;
 }
+
 
 
 

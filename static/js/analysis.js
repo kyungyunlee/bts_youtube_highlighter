@@ -79,11 +79,26 @@
    if (e.target.id == 'option1') {
      document.getElementById("keywords").style.display = "none";
      document.getElementById("popular_frames").style.display = "initial";
+     document.getElementById("sentiment_count").style.display = "none";
+     document.getElementById("overview").style.display = "none";
 
-   } else {
+   } else if (e.target.id == 'option2') { 
      document.getElementById("keywords").style.display = "initial";
      document.getElementById("popular_frames").style.display = "none"; 
-   }
+     document.getElementById("sentiment_count").style.display = "none";
+     document.getElementById("overview").style.display = "none";
+   } else if (e.target.id == 'option3') { 
+     document.getElementById("keywords").style.display = "none";
+     document.getElementById("popular_frames").style.display = "none"; 
+     document.getElementById("sentiment_count").style.display = "initial";
+     document.getElementById("overview").style.display = "none";
+
+   } else { 
+     document.getElementById("keywords").style.display = "none";
+     document.getElementById("popular_frames").style.display = "none"; 
+     document.getElementById("sentiment_count").style.display = "none";
+     document.getElementById("overview").style.display = "initial";
+   } 
 
 
 

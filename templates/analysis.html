@@ -3,10 +3,14 @@
 {% block content %}
 
     <div class="container dropdown">
-        <div class="title pointerCursor">Select an option <i class="fa fa-angle-right"></i></div>
+        <div class="title pointerCursor">Data overview<i class="fa fa-angle-right"></i></div>
         <div class="menu pointerCursor hide">
+
+            <div class="option" id="option4">
+              Data Overview
+            </div>
             <div class="option" id="option1">
-                   ARMY's favorite moments 
+              ARMY's favorite moments
             </div>
             <div class="option" id="option2">
                     Popular keywords
@@ -18,8 +22,20 @@
         </div>
     </div>
 
-    <!-- <span id="result">The result is : </span> -->
     <div class="container"> 
+    <div id="overview" class="container overview-metadata" style="display:initial;" >
+      <p>Data collected around Nov ~ Dec 5, 2020.</p>
+      <p>Videos are from official 
+        <a href="https://www.youtube.com/channel/UCLkAepWjdylmXSltofFvsYQ" target="_blank" rel="noopener noreferrer">BANGTANTV</a> playlists:
+        <a href="https://www.youtube.com/playlist?list=PL5hrGMysD_Gu2a7-KuaQTxjRVPqM2Bi63" target="_blank" rel="noopener noreferrer">BANGTAN BOMB</a>, 
+        <a href="https://www.youtube.com/playlist?list=PL5hrGMysD_Gt2ekpVt25B6C5ozZjVxQdh" target="_blank" rel="noopener noreferrer">BTS EPISODE</a>, 
+        <a href="https://www.youtube.com/playlist?list=PL5hrGMysD_GvZPFPcdm9NCqKfQKPYrkFh" target="_blank" rel="noopener noreferrer">BTS FESTA</a>.
+      </p>
+      <p>Total <span>{{n_videos}}</span> videos.</p>
+      <p>Average of <span>{{avg_comments}}</span> comments per video.</p> 
+    </div> 
+
+    <!-- <span id="result">The result is : </span> -->
       <!-- <h4 id="result">  </h4> -->
       <!-- <div class="container" id="keywords">
           <h4 > Keywords </h4>
@@ -30,29 +46,48 @@
 
 
       <!-- <h4> Popular frames </h4> -->
-      <div id="popular_frames">
+      <div class="container" id="popular_frames" style="display:none;">
+          <p id="title">Here is a list of moments with the most comments</p>
           {% for pair in most_commented_scenes %}
+              
+              <div class="container"> 
+                <div class="row"> 
+                  <div class="col-sm"> 
+                    <iframe id="analysis" type="text/html" width="320" height="180"
+          src="https://www.youtube.com/embed/{{ pair[1] }}?start={{ pair[2] }}"
+          frameborder="0"></iframe>
 
-              <iframe id="analysis" type="text/html" width="320" height="180"
-    src="https://www.youtube.com/embed/{{ pair[1] }}?start={{ pair[2] }}"
-    frameborder="0"></iframe>
+                    <p>
+                          {{ pair[0] }} 
+                    </p>
+                    <p> at {{ pair[2] }} second, {{ pair[3] }} comments </p>
+                 </div>
+                 <div class="col-sm">
+                   <p> {{ pair[4][:10] }} </p>
+                 </div> 
+               </div>
+             </div> 
 
-            <p>
-                  {{ pair[0] }} 
-            </p>
-            <p> at {{ pair[2] }} second, {{ pair[3] }} comments </p>
-          {% endfor %}
+         {% endfor %}
       </div>
 
 
-      <div id="keywords" style="display:none;">
+      <div class="container" id="keywords" style="display:none;">
+
+        <p id="title">Here are top keywords from comments</p>
+        <div>
           {{ keywords }}
+        </div>
+
+        <img src={{wordcloud_f}} class="center">
+
       </div>
 
 
 
       <div id="sentiment_count" style="display:none;">
           {{ sentiment_score_count }}
+          bye
       </div>
    </div>
 

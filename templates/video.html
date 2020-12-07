@@ -38,18 +38,28 @@
 
 <div class="container" id="search-video-container"> 
 
-  <h4>
-      YouTube video link: 
-      <a href="https://www.youtube.com/watch?v={{ youtube_id }} ">
+  
+  <div class="container video-description"> 
+    <div>
+        <a href="https://www.youtube.com/watch?v={{ youtube_id }}" target="_blank" rel="noopener noreferrer">
         {{ youtube_id }}
       </a>
-  </h4>
+    </div> 
+    <div>
+      <p>Total of {{n_comments}} comments</p>
+    </div> 
 
-  <div id="video_keywords">
-    {{ keywords }}
-  </div>
+    <div id="video_keywords">
+      {{ keywords }}
+    </div>
+  </div> 
+
 
   <div  id="player">{{ youtube_id }}</div>
+  <div class="container">
+    <h5>Comment histogram </h5>
+    <p>Hover over the bars to read comments. Clicking the bar will take you to that moment.</p>
+  </div> 
   <div  id="dist_graph"></div>
 </div>
 

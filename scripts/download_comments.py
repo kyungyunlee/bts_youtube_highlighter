@@ -3,6 +3,7 @@ from multiprocessing import Pool
 import csv 
 from collections import defaultdict 
 from apiclient.discovery import build
+import re
 
 def build_service(filename):
     with open(filename) as f:
@@ -79,7 +80,7 @@ def download_youtube_comments(youtube_id, comment_f):
 
 
 def run_process(yt_id) :
-    comment_f = os.path.join("static/data", yt_id + '.csv')
+    comment_f = os.path.join("../static/data", yt_id + '.csv')
     if os.path.exists(comment_f): 
         print ("already done")
     else : 
@@ -90,11 +91,11 @@ def run_process(yt_id) :
 
 if __name__ == '__main__':
     # Analyse all data 
-    playlist_names =  ['bighit_official_movie'] # ['bangtantv_bangtan_bomb'] #  ['bighit_official_movie']# 'Jungkook97'] # 'Pinkkoyaa'] #'Dear_my_baby_G'] # 'bangtantv_bts_episode'] # 'KOOKIESTAETAS'] # 'bangtantv_bts_festa']
+    playlist_names = ['bangtantv_bts_practice_video'] # ['bighit_official_movie'] # ['bangtantv_bangtan_bomb'] #  ['bighit_official_movie']# 'Jungkook97'] # 'Pinkkoyaa'] #'Dear_my_baby_G'] # 'bangtantv_bts_episode'] # 'KOOKIESTAETAS'] # 'bangtantv_bts_festa']
 
     all_videos = [] 
     for playlist_name in playlist_names : 
-        f = open (os.path.join('static/data/playlists', playlist_name + '.txt'))
+        f = open (os.path.join('../static/data/playlists', playlist_name + '.txt'))
         all_videos.extend(f.readlines())
 
     all_videos = [vid.strip('\n').split('\t')[1] for vid in all_videos]

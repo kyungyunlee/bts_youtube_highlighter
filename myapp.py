@@ -3,12 +3,14 @@ import csv
 from pathlib import Path
 import random
 from flask import Flask, render_template, request, jsonify, url_for
+from flask_caching import Cache
 from collections import defaultdict
 import pickle
 from wordcloud import WordCloud, STOPWORDS
 import numpy as np
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+import time 
 
 from data_utils import (
     join_timestamps,
@@ -41,6 +43,8 @@ def preprocess():
     """
     Loading files before running the app
     """
+
+    start = time.time()
     global all_video_fs, n_comments_list, comments_list
     global playlist_to_vid, all_video_comment_list, all_ts_comment_list, all_video_sentiment_list
     global yt_id_to_comment_dict
@@ -128,9 +132,12 @@ def preprocess():
         print("already computed")
         word_freq_list = pickle.load(open(word_freq_f, "rb"))
 
+    print ("preprocessing time", time.time() - start)
+
 
 preprocess()
 app = Flask(__name__)
+cache = Cache(app,config={'CACHE_TYPE': 'simple'})
 
 
 @app.route("/")
@@ -142,8 +149,8 @@ def index():
 def about_page():
     return render_template("about.html")
 
-
 @app.route("/analysis")
+@cache.cached(timeout=50)
 def general_analysis():
     global word_freq_list
 
@@ -192,6 +199,7 @@ def general_analysis():
     keywords = word_freq_list[:50]
 
     # Sentiment analysis
+    start = time.time() 
     sentiment_score_list, score_to_comment_dict_ = get_sentiment_data(
         all_video_sentiment_list
     )
@@ -204,6 +212,7 @@ def general_analysis():
     score_to_comment_dict_ = {}
     # sentiment_score_list = []
     # score_to_comment_dict = {"asdfa" :"asdfsdf"}
+    print ("sentiment data time", time.time() - start)
 
     return render_template(
         "analysis.html",
@@ -241,4 +250,6 @@ def show_video_data(youtube_id):
 
 
 if __name__ == "__main__":
+    # app.jinja_env.cache = {}
+
     app.run(debug=True, use_reloader=True)

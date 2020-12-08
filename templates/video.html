@@ -8,24 +8,26 @@
 
 
 <div class="accordion" id="accordionExample">
-   
+
   {% for pair in playlist_list %}
   <div class="card">
 
     <div class="card-header" id="section_{{ pair[0] }}">
       <h5 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ pair[0] }}" aria-expanded="true" aria-controls="collapseOne">
-          {{ pair[0] }} 
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ pair[0] }}"
+          aria-expanded="true" aria-controls="collapseOne">
+          {{ pair[0] }}
         </button>
       </h5>
     </div>
 
-    <div id="collapse_{{ pair[0]}}" class="collapse" aria-labelledby="section_{{ pair[0] }}" data-parent="#accordionExample">
+    <div id="collapse_{{ pair[0]}}" class="collapse" aria-labelledby="section_{{ pair[0] }}"
+      data-parent="#accordionExample">
       <div class="card-body">
         <ul>
-        {% for vid_id in pair[1] %}
+          {% for vid_id in pair[1] %}
           <li><a href="/video/{{vid_id[1]}}" id="video-list-item">{{ vid_id[0] }} </a></li>
-        {% endfor %}
+          {% endfor %}
         </ul>
       </div>
     </div>
@@ -36,36 +38,47 @@
 </div>
 
 
-<div class="container" id="search-video-container"> 
+<div class="container" id="search-video-container">
 
-  
-  <div class="container video-description"> 
-    <div>
+
+  <div class="container video-description">
+    <!--<div id="mainvideo-subtitle">
         <a href="https://www.youtube.com/watch?v={{ youtube_id }}" target="_blank" rel="noopener noreferrer">
-        {{ youtube_id }}
+        Link to youtube video 
       </a>
     </div> 
-    <div>
-      <p>Total of {{n_comments}} comments</p>
-    </div> 
+    <div>-->
+    <p id="mainvideo-subtitle">Total of {{n_comments}} comments</p>
+
 
     <div id="video_keywords">
       {{ keywords }}
     </div>
-  </div> 
+  </div>
 
 
-  <div  id="player">{{ youtube_id }}</div>
+  <div class="container" id="mainVideo-container">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="mainvideoWrapper">
+          <div id="player">{{ youtube_id }}</div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="overflow-auto" id="comments"></div>
+      </div>
+    </div>
+  </div>
   <div class="container">
-    <h5>Comment histogram </h5>
-    <p>Hover over the bars to read comments. Clicking the bar will take you to that moment.</p>
-  </div> 
-  <div  id="dist_graph"></div>
+    <h5 id="mainvideo-subtitle">Comment histogram </h5>
+    <p>Hover over the bars. Click to watch that moment.</p>
+  </div>
+  <div id="dist_graph"></div>
 </div>
 
 <div id="duration" style="display:none;"></div>
 
-<div id="comments">
+<div id="all-comments" style="display:none;">
   {{ comments | tojson }}
 </div>
 
@@ -73,5 +86,6 @@
 <div id="counts" style="display:none;">
   {{ counts }}
 </div>
+
 
 {% endblock %}

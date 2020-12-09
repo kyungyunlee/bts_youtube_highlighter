@@ -10,7 +10,7 @@
       Data Overview
     </div>
     <div class="option" id="option1">
-      ARMY's favorite moments
+      ARMY's notable moments
     </div>
     <div class="option" id="option2">
       Popular keywords
@@ -55,15 +55,13 @@
     {% for pair in most_commented_scenes %}
 
     <div class="container" id="video_container">
-      <p id="video-desc"> At {{ pair[3] }}, {{ pair[4] }} comments </p>
+      <p id="video-desc" ><a href="/video/{{ pair[1] }}" style="color:purple;">{{ pair[0] }}</a></p>
+      <p > At {{ pair[3] }}, {{ pair[4] }} comments </p>
       <div class="row">
         <div class="col-sm-5">
           <div class="videoWrapper">
             <iframe id="vidplayer" type="text/html" width="560" height="349"
               src="https://www.youtube.com/embed/{{ pair[1] }}?start={{ pair[2] }}" frameborder="0"></iframe>
-          </div>
-          <div id="video-title">
-            {{ pair[0] }}
           </div>
         </div>
         <div class="col-sm-7">
@@ -92,29 +90,20 @@
 
 
   <div class="container" id="sentiment_count" style="display:none;">
-    <div class="row">
-      <div class="col-1" id="gradient-box-container">
-        <div id="gradient-box">
-        </div>
-      </div>
-
-      <div class="col-11" id="sentiment-data">
-        <div style="display:none" id="sentiment_score_list">{{ sentiment_score_list }}</div>
-        <div style="display:none" id="sentiment_score_dict">{{ sentiment_score_dict | tojson }}</div>
-        {% for k,v in sentiment_score_dict.items() %}
-        <a data-toggle="collapse" href="#collapseExample_{{ loop.index }}" aria-expanded="false"
-          aria-controls="collapseExample_{{ loop.index }}">
-          <div>{{k}}</div>
-        </a>
-        <div class="collapse" id="collapseExample_{{loop.index}}" aria-expanded="false"
-          aria-controls="collapseExample_{{loop.index}}">
-          <div class="card card-body" id="sentiment-cardbody" style="background-color:rgba(0,0,0,0.07);">
-            <div class="overflow-auto">{{v}}</div>
+    <div class="container">
+      <div class="row">Click on bars to some read comments.</div>
+        <div class="row"> 
+          <div class="col-sm-6" > 
+            <div id="sentiment_viz" style="width:30em;"></div>
           </div>
+          <div class="col-sm-6">
+            <div id="sentiment-comment-content" class="overflow-auto"></div>
+          </div> 
         </div>
-        {% endfor %}
-      </div>
     </div>
+
+    <div style="display:none" id="sentiment_score_list">{{ sentiment_score_list | tojson }}</div>
+    <div style="display:none" id="sentiment_score_dict">{{ sentiment_score_dict | tojson }}</div>
   </div>
 </div>
 

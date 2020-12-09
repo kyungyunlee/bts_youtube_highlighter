@@ -1,6 +1,9 @@
-body {
+
+html, body {
   font-family: "Roboto", serif;
   background-color: #dcd0ff;
+  overflow-x:hidden;
+  height:100%;
 }
 
 .mainbody {
@@ -69,12 +72,10 @@ h2.about-en {
 #search-video-container {
   text-align: center;
   margin: none;
-  border: 0.1em solid black;
 }
 
 #dist_graph {
   width: 100%;
-  border: 1px solid red;
   text-align: center;
 }
 
@@ -338,3 +339,11 @@ nav {
   font-size: 1.5em;
   font-weight: 600;
 }
+
+#sentiment-comment-content {
+  max-height : 20em;
+  background-color: rgba(0, 0, 0, 0.07);
+  padding : 2%;
+}
+
+

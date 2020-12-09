@@ -1,4 +1,5 @@
 import os
+import json
 import csv
 from pathlib import Path
 import random
@@ -203,7 +204,6 @@ def general_analysis():
     sentiment_score_list, score_to_comment_dict_ = get_sentiment_data(
         all_video_sentiment_list
     )
-    sentiment_score_list = ",".join(sentiment_score_list)
 
     score_to_comment_dict = {}
     for k, v in score_to_comment_dict_.items():
@@ -238,6 +238,23 @@ def show_video_data(youtube_id):
     curr_comment = yt_id_to_comment_dict[youtube_id]
     timestamp_list = get_timestamp_list(curr_comment)
     n_comments = len(timestamp_list)
+    
+    comment_list = []
+    for k,v in curr_comment.items():
+        for v_ in v: 
+            comment_list.append(v_[0])
+
+    keywords = create_word_frequency_table(comment_list)
+    keywords = keywords[:10] 
+    sentiment_f = f'static/data/sentiment/{youtube_id}.csv'
+    sentiments = [] 
+    if os.path.exists(sentiment_f):
+        with open(sentiment_f, 'r') as f :
+            reader = csv.reader(f)
+            for row in reader : 
+                _,_,_,sentiment_score = row
+                sentiments.append(round(float(sentiment_score),1))
+
 
     return render_template(
         "video.html",
@@ -246,6 +263,8 @@ def show_video_data(youtube_id):
         comments=curr_comment,
         counts=timestamp_list,
         n_comments=n_comments,
+        keywords=keywords,
+        sentiments=sentiments
     )
 
 

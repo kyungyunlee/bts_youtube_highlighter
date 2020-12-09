@@ -16,36 +16,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link type="text/css" rel="stylesheet" href="../static/css/mystyle.css" />
   <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-
-
-
-  <script>
-    $(document).ready(function () {
-      /*
-        // Add minus icon for collapse element which is open by default
-      $('.panel-collapse').on('show.bs.collapse', function () {
-        $(this).parent('.panel').find('.fa-minus').show();
-        $(this).parent('.panel').find('.fa-plus').hide();
-      })
-      $('.panel-collapse').on('hide.bs.collapse', function () {
-        $(this).parent('.panel').find('.fa-minus').hide();
-        $(this).parent('.panel').find('.fa-plus').show();
-      })
-        */
-      $(".collapse.show").each(function () {
-        console.log("Asdfasfasdf");
-        $(this).prev(".card-header").find(".fa").addClass("fa-minus").removeClass("fa-plus");
-      });
-
-      // Toggle plus minus icon on show hide of collapse element
-      $(".collapse").on('show.bs.collapse', function () {
-        $(this).prev(".card-header").find(".fa").removeClass("fa-plus").addClass("fa-minus");
-      }).on('hide.bs.collapse', function () {
-        $(this).prev(".card-header").find(".fa").removeClass("fa-minus").addClass("fa-plus");
-      });
-    });
-  </script>
 
   <!-- <title>{% block title %} {% endblock %}</title> -->
   <title>BTS Youtube Highlighter</title>
@@ -94,10 +66,13 @@
   <div class="mainbody container">
     {% block content %} {% endblock %}
   </div>
+  
 
+  <footer class="mt-auto">
   <div class="container">
     <p>&copy;2020 Kyungyun Lee</p>
   </div>
+  </footer>
 </body>
 
 
@@ -113,6 +88,24 @@
 <script src="/static/js/videoplayer.js"></script>
 <script src="/static/js/analysis.js"></script>
 <script src="/static/js/sentiment_analysis.js"></script>
+
+
+
+  <script>
+    $(document).ready(function () {
+      $(".collapse.show").each(function () {
+        console.log("Asdfasfasdf");
+        $(this).prev(".card-header").find(".fa").addClass("fa-minus").removeClass("fa-plus");
+      });
+
+      // Toggle plus minus icon on show hide of collapse element
+      $(".collapse").on('show.bs.collapse', function () {
+        $(this).prev(".card-header").find(".fa").removeClass("fa-plus").addClass("fa-minus");
+      }).on('hide.bs.collapse', function () {
+        $(this).prev(".card-header").find(".fa").removeClass("fa-minus").addClass("fa-plus");
+      });
+    });
+  </script>
 
 
 

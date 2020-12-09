@@ -1,0 +1,46 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container dropdown">
+  <div class="title pointerCursor">
+    Sentiment analysis<i class="fa fa-angle-right"></i>
+  </div>
+  <div class="menu pointerCursor hide">
+    <div class="option" id="option4">
+      <a href="/main">Data Overview</a>
+    </div>
+    <div class="option" id="option1">
+      <a href="/main/moments/0">ARMY's notable moments</a>
+    </div>
+    <div class="option" id="option2">
+      <a href="/main/keywords">Popular keywords</a>
+    </div>
+    <div class="option" id="option3">
+      <a href="/main/sentiment">Sentiment analysis</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="container" id="sentiment_count">
+    <div class="container">
+      <div>Click on bars to read some comments.</div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div id="sentiment_viz" style="width: 30em"></div>
+        </div>
+        <div class="col-sm-6">
+          <div id="sentiment-comment-content" class="overflow-auto"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: none" id="sentiment_score_list">
+      {{ sentiment_score_list | tojson }}
+    </div>
+    <div style="display: none" id="sentiment_score_dict">
+      {{ sentiment_score_dict | tojson }}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

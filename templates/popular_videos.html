@@ -1,0 +1,95 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container dropdown">
+  <div class="title pointerCursor">
+    ARMY's notable moments<i class="fa fa-angle-right"></i>
+  </div>
+  <div class="menu pointerCursor hide">
+    <div class="option" id="option4">
+      <a href="/main">Data Overview</a>
+    </div>
+    <div class="option" id="option1">
+      <a href="/main/moments/0">ARMY's notable moments</a>
+    </div>
+    <div class="option" id="option2">
+      <a href="/main/keywords">Popular keywords</a>
+    </div>
+    <div class="option" id="option3">
+      <a href="/main/sentiment">Sentiment analysis</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="container" id="popular_frames">
+    <div class="container">
+      <p id="title">Here is a list of moments with the most comments</p>
+    </div>
+    <div class="container">
+      {% for pair in most_commented_scenes %}
+
+      <div class="container" id="video_container">
+        <p id="video-desc">
+          <a href="/video/{{ pair[1] }}" style="color: purple">{{ pair[0] }}</a>
+        </p>
+        <p>At {{ pair[3] }}, {{ pair[4] }} comments</p>
+        <div class="row">
+          <div class="col-sm-7">
+            <div class="videoWrapper">
+              <iframe
+                id="vidplayer"
+                type="text/html"
+                width="560"
+                height="349"
+                src="https://www.youtube.com/embed/{{ pair[1] }}?start={{ pair[2] }}"
+                frameborder="0"
+              ></iframe>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="overflow-auto" id="comment_for_video">
+              <p>{{ pair[5] }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item active" id="moments0">
+          <a class="page-link" href="/main/moments/0">1</a>
+        </li>
+        <li class="page-item" id="moments1">
+          <a class="page-link" href="/main/moments/1">2</a>
+        </li>
+        <li class="page-item" id="moments2">
+          <a class="page-link" href="/main/moments/2">3</a>
+        </li>
+        <li class="page-item" id="moments3">
+          <a class="page-link" href="/main/moments/3">4</a>
+        </li>
+        <li class="page-item" id="moments4">
+          <a class="page-link" href="/main/moments/4">5</a>
+        </li>
+        <li class="page-item" id="moments5">
+          <a class="page-link" href="/main/moments/5">6</a>
+        </li>
+        <li class="page-item" id="moments6">
+          <a class="page-link" href="/main/moments/6">7</a>
+        </li>
+        <li class="page-item" id="moments7">
+          <a class="page-link" href="/main/moments/7">8</a>
+        </li>
+        <li class="page-item" id="moments8">
+          <a class="page-link" href="/main/moments/8">9</a>
+        </li>
+        <li class="page-item" id="moments9">
+          <a class="page-link" href="/main/moments/9">10</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+{% endblock %}

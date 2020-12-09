@@ -72,6 +72,7 @@ h2.about-en {
 #search-video-container {
   text-align: center;
   margin: none;
+  margin-top:5%;
 }
 
 #dist_graph {
@@ -237,7 +238,7 @@ nav {
   border: 0.2em solid black;
 }
 
-.inside {
+.card-body {
   border: 0.2em solid black;
 }
 
@@ -281,12 +282,16 @@ nav {
   margin-bottom: 8%;
 }
 
+#video_container > div > div{
+  margin-top:2%;
+} 
+
 #video_container #video-title {
   font-size: 0.7em;
 }
 
 #comment_for_video {
-  max-height: 12.5em;
+  max-height: 15em;
   background-color: rgba(0, 0, 0, 0.07);
   padding: 2%;
 }
@@ -336,8 +341,9 @@ nav {
 
 #mainvideo-subtitle {
   font-family: "Montserrat", sans-serif;
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-weight: 600;
+  margin-top : 5%;
 }
 
 #sentiment-comment-content {
@@ -347,3 +353,41 @@ nav {
 }
 
 
+.page {
+  display: none;
+}
+.page-active {
+  display: block;
+}
+
+
+
+
+.pagination > li > a
+{
+    background-color: white;
+    color: #5A4181;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #5A4181 !Important;
+    border: solid 1px #5A4181 !Important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #5A4181 !Important;
+    border: solid 1px #5A4181;
+}

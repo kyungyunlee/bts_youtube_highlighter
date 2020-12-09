@@ -146,7 +146,9 @@ function plot_hist(duration) {
       plot_bgcolor: "rgba(255,255,255,0)",
     };
 
-  Plotly.newPlot("comment_graph", data, layout);
+  var config = { responsive: true };
+
+  Plotly.newPlot("comment_graph", data, layout, config);
 
   myPlot.on("plotly_click", function (data) {
     player.seekTo(data.points[0].x);
@@ -191,6 +193,7 @@ function plot_sentiment() {
       title: "Counts",
     },
   };
+  var config = { responsive: true };
 
-  Plotly.newPlot("sentiment_graph", data, layout);
+  Plotly.newPlot("sentiment_graph", data, layout, config);
 }

@@ -11,7 +11,7 @@ from wordcloud import WordCloud, STOPWORDS
 import numpy as np
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
-import time 
+import time
 
 from data_utils import (
     join_timestamps,
@@ -37,7 +37,7 @@ all_ts_comment_list = (
 all_video_sentiment_list = []  # list of video sentiment data files
 yt_id_to_comment_dict = {}
 word_freq_list = []
-wordcloud_f = "static/wordcloud.png"
+wordcloud_f = "/static/wordcloud.png"
 
 
 def preprocess():
@@ -133,12 +133,12 @@ def preprocess():
         print("already computed")
         word_freq_list = pickle.load(open(word_freq_f, "rb"))
 
-    print ("preprocessing time", time.time() - start)
+    print("preprocessing time", time.time() - start)
 
 
 preprocess()
 app = Flask(__name__)
-cache = Cache(app,config={'CACHE_TYPE': 'simple'})
+cache = Cache(app, config={"CACHE_TYPE": "simple"})
 
 
 @app.route("/")
@@ -150,6 +150,86 @@ def index():
 def about_page():
     return render_template("about.html")
 
+
+@app.route("/main")
+def overview():
+    n_videos = len(all_video_fs)
+    avg_comments = round(sum(n_comments_list) / len(n_comments_list), 1)
+
+    return render_template(
+        "overview.html",
+        n_videos=n_videos,
+        n_comments=sum(n_comments_list),
+        avg_comments=avg_comments,
+    )
+
+
+@app.route("/main/moments/<idx>")
+def notable_moments(idx):
+
+    ########  Most commented scenes #########
+    # Per clip, get a thumbnail gif, title, display keywords, number of comments, sample comments
+    sorted_comment = sorted(all_ts_comment_list, key=lambda x: x[3], reverse=True)
+    print(len(sorted_comment))
+    most_commented_scenes = []
+    for vid in sorted_comment[int(idx) * 10 : 10 * (int(idx) + 1)]:
+        curr_title = vid[0]
+        curr_yt_id = Path(vid[1]).stem
+        curr_timestamp = vid[2]
+        curr_n_comments = vid[3]
+        curr_comments = yt_id_to_comment_dict[curr_yt_id][curr_timestamp]
+        # subtract 3 seconds for the video start time
+        curr_timestamp = str(int(curr_timestamp) - 3)
+        # convert to min:ss
+        m = int(curr_timestamp) // 60
+        s = int(curr_timestamp) - (60 * m)
+        curr_timestamp_str = "%02d:%02d" % (m, s)
+        most_commented_scenes.append(
+            (
+                curr_title,
+                curr_yt_id,
+                curr_timestamp,
+                curr_timestamp_str,
+                curr_n_comments,
+                curr_comments,
+            )
+        )
+
+    return render_template(
+        "popular_videos.html", most_commented_scenes=most_commented_scenes
+    )
+
+
+@app.route("/main/keywords")
+def overall_keywords():
+    global word_freq_list
+    # Top N keywords
+    keywords = word_freq_list[:50]
+    return render_template("keywords.html", keywords=keywords, wordcloud_f=wordcloud_f)
+
+
+@app.route("/main/sentiment")
+def overall_sentiment():
+
+    # Sentiment analysis
+    sentiment_score_list, score_to_comment_dict_ = get_sentiment_data(
+        all_video_sentiment_list
+    )
+
+    score_to_comment_dict = {}
+    for k, v in score_to_comment_dict_.items():
+        random.shuffle(v)
+        score_to_comment_dict[k] = v[:100]
+    score_to_comment_dict_ = {}
+    # sentiment_score_list = []
+    # score_to_comment_dict = {"asdfa" :"asdfsdf"}
+    return render_template(
+        "sentiment.html",
+        sentiment_score_list=sentiment_score_list,
+        sentiment_score_dict=score_to_comment_dict,
+    )
+
+
 @app.route("/analysis")
 @cache.cached(timeout=50)
 def general_analysis():
@@ -159,14 +239,14 @@ def general_analysis():
     avg_comments = round(sum(n_comments_list) / len(n_comments_list), 1)
 
     #######  Most commented video ########
-    '''
+    """
     # Per video, thumbnail, number of comment counts
     sorted_vid = sorted(all_video_comment_list, key=lambda x: x[2], reverse=True)
 
     most_commented_videos = []
     for vid in sorted_vid[:10]:
         most_commented_videos.append((vid[0], Path(vid[1]).stem, vid[2]))
-    '''
+    """
 
     ########  Most commented scenes #########
     # Per clip, get a thumbnail gif, title, display keywords, number of comments, sample comments
@@ -200,7 +280,7 @@ def general_analysis():
     keywords = word_freq_list[:50]
 
     # Sentiment analysis
-    start = time.time() 
+    start = time.time()
     sentiment_score_list, score_to_comment_dict_ = get_sentiment_data(
         all_video_sentiment_list
     )
@@ -212,7 +292,7 @@ def general_analysis():
     score_to_comment_dict_ = {}
     # sentiment_score_list = []
     # score_to_comment_dict = {"asdfa" :"asdfsdf"}
-    print ("sentiment data time", time.time() - start)
+    print("sentiment data time", time.time() - start)
 
     return render_template(
         "analysis.html",
@@ -238,23 +318,22 @@ def show_video_data(youtube_id):
     curr_comment = yt_id_to_comment_dict[youtube_id]
     timestamp_list = get_timestamp_list(curr_comment)
     n_comments = len(timestamp_list)
-    
+
     comment_list = []
-    for k,v in curr_comment.items():
-        for v_ in v: 
+    for k, v in curr_comment.items():
+        for v_ in v:
             comment_list.append(v_[0])
 
     keywords = create_word_frequency_table(comment_list)
-    keywords = keywords[:10] 
-    sentiment_f = f'static/data/sentiment/{youtube_id}.csv'
-    sentiments = [] 
+    keywords = keywords[:10]
+    sentiment_f = f"static/data/sentiment/{youtube_id}.csv"
+    sentiments = []
     if os.path.exists(sentiment_f):
-        with open(sentiment_f, 'r') as f :
+        with open(sentiment_f, "r") as f:
             reader = csv.reader(f)
-            for row in reader : 
-                _,_,_,sentiment_score = row
-                sentiments.append(round(float(sentiment_score),1))
-
+            for row in reader:
+                _, _, _, sentiment_score = row
+                sentiments.append(round(float(sentiment_score), 1))
 
     return render_template(
         "video.html",
@@ -264,7 +343,7 @@ def show_video_data(youtube_id):
         counts=timestamp_list,
         n_comments=n_comments,
         keywords=keywords,
-        sentiments=sentiments
+        sentiments=sentiments,
     )
 
 

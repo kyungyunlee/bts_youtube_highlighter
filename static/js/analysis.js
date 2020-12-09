@@ -48,7 +48,7 @@ function handleOptionSelected(e) {
   setTimeout(() => toggleClass(icon, "rotate-90", 0));
 
   // Display none
-  console.log(e.target.id);
+  /*
   if (e.target.id == "option1") {
     document.getElementById("keywords").style.display = "none";
     document.getElementById("popular_frames").style.display = "initial";
@@ -70,6 +70,7 @@ function handleOptionSelected(e) {
     document.getElementById("sentiment_count").style.display = "none";
     document.getElementById("overview").style.display = "initial";
   }
+  */
 }
 
 function handleTitleChange(e) {
@@ -100,3 +101,14 @@ dropdownOptions.forEach((option) =>
 document
   .querySelector(".dropdown .title")
   .addEventListener("change", handleTitleChange);
+
+$(document).ready(function () {
+  var pathname = $(location).attr("pathname").split("/");
+  pathname = pathname[2] + pathname[3];
+
+  //remove all pre-existing active classes
+  $(".active").removeClass("active");
+
+  //add the active class to the link we clicked
+  $("#" + pathname).addClass("active");
+});

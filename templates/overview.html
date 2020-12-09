@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container dropdown">
+  <div class="title pointerCursor">
+    Data overview<i class="fa fa-angle-right"></i>
+  </div>
+  <div class="menu pointerCursor hide">
+    <div class="option" id="option4">
+      <a href="/main">Data Overview</a>
+    </div>
+    <div class="option" id="option1">
+      <a href="/main/moments/0">ARMY's notable moments</a>
+    </div>
+    <div class="option" id="option2">
+      <a href="/main/keywords">Popular keywords</a>
+    </div>
+    <div class="option" id="option3">
+      <a href="/main/sentiment">Sentiment analysis</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div
+    id="overview"
+    class="container overview-metadata"
+    style="display: initial"
+  >
+    <p>Data collected around Nov ~ Dec 5, 2020.</p>
+    <p>
+      Videos are from official
+      <a
+        href="https://www.youtube.com/channel/UCLkAepWjdylmXSltofFvsYQ"
+        target="_blank"
+        rel="noopener noreferrer"
+        >BANGTANTV</a
+      >
+      playlists:
+      <a
+        href="https://www.youtube.com/playlist?list=PL5hrGMysD_Gu2a7-KuaQTxjRVPqM2Bi63"
+        target="_blank"
+        rel="noopener noreferrer"
+        >BANGTAN BOMB</a
+      >,
+      <a
+        href="https://www.youtube.com/playlist?list=PL5hrGMysD_Gt2ekpVt25B6C5ozZjVxQdh"
+        target="_blank"
+        rel="noopener noreferrer"
+        >BTS EPISODE</a
+      >,
+      <a
+        href="https://www.youtube.com/playlist?list=PL5hrGMysD_GvZPFPcdm9NCqKfQKPYrkFh"
+        target="_blank"
+        rel="noopener noreferrer"
+        >BTS FESTA</a
+      >.
+    </p>
+    <p>
+      Total <span>{{n_videos}}</span> videos,
+      <span>{{n_comments}}</span> comments.
+    </p>
+    <p>Average of <span>{{avg_comments}}</span> comments per video.</p>
+  </div>
+
+  <!-- <span id="result">The result is : </span> -->
+  <!-- <h4 id="result">  </h4> -->
+  <!-- <div class="container" id="keywords">
+          <h4 > Keywords </h4>
+          <div>
+              {{ keywords }}
+          </div>
+      </div> -->
+</div>
+{% endblock %}

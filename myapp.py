@@ -3,7 +3,7 @@ import json
 import csv
 from pathlib import Path
 import random
-from flask import Flask, render_template, request, jsonify, url_for
+from flask import Flask, render_template, redirect, request, jsonify, url_for
 from flask_caching import Cache
 from collections import defaultdict
 import pickle
@@ -143,7 +143,8 @@ cache = Cache(app, config={"CACHE_TYPE": "simple"})
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    # return render_template("index.html")
+    return redirect(url_for('overview'))
 
 
 @app.route("/about")
@@ -350,4 +351,4 @@ def show_video_data(youtube_id):
 if __name__ == "__main__":
     # app.jinja_env.cache = {}
 
-    app.run(debug=True, use_reloader=True)
+    app.run()# use_reloader=True)

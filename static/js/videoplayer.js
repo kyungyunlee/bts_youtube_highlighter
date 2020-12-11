@@ -51,33 +51,12 @@ function onPlayerStateChange(event) {
   var currentTime = player.getCurrentTime();
   currentTime = Math.round(currentTime).toString();
   
-  /* 
-  $.ajax({
-    type: "POST",
-    contentType: "application/json;charset=utf-8",
-    url: "/video/" + player_elem.textContent,
-    traditional: "true",
-    data: JSON.stringify({ currentTime }),
-    // dataType: "json",
-    success: function (response) {
-      console.log("change");
-      if (comment_dict[currentTime] !== undefined) {
-        $("#timestamp_comments").text(comment_dict[currentTime]);
-      }
-    },
-  });
-  */
   $("#timestamp_comments").text(comment_dict[currentTime]);
   
-  /*
-  $.post("/video/" + player_elem.textContent,  {
-     javascript_data: currentTime
-  });
-  */
 
   if (player.getPlayerState() == 1) {
     console.log("playing");
-    interval_function = setInterval(doAjax, interval);
+    interval_function = setInterval(update_comment, interval);
   } 
    else {
      console.log("stop")
@@ -85,33 +64,10 @@ function onPlayerStateChange(event) {
    }
 }
 
-function doAjax() {
+function update_comment() {
   var currentTime = player.getCurrentTime();
   currentTime = Math.round(currentTime).toString();
-  /*
-  $.ajax({
-    type: "POST",
-    url: "/video/" + player_elem.textContent,
-    contentType: "application/json;charset=utf-8",
-    // data: $(this).serialize(),
-    data: JSON.stringify({ currentTime }),
-    // dataType: 'json',
-    traditional: "true",
-    success: function (data) {
-      console.log("ajaxadfasdf")
-      if (comment_dict[currentTime] !== undefined) {
-        $("#timestamp_comments").text(comment_dict[currentTime]);
-      }
-    },
-  });
-  */
   $("#timestamp_comments").text(comment_dict[currentTime]);
-
-  /*
-  $.post("/video/" + player_elem.textContent,  {
-     javascript_data: currentTime
-  });
-  */
 }
 
 function plot_hist(duration) {

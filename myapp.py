@@ -37,7 +37,8 @@ all_ts_comment_list = (
 all_video_sentiment_list = []  # list of video sentiment data files
 yt_id_to_comment_dict = {}
 word_freq_list = []
-wordcloud_f = "/static/wordcloud.png"
+wordcloud_f = "static/wordcloud.png"
+sentiment_pkl_f = "static/sentiment_score.pkl"
 
 
 def preprocess():
@@ -210,21 +211,24 @@ def overall_keywords():
 
 
 @app.route("/main/sentiment")
-@cache.cached(timeout=50)
 def overall_sentiment():
 
-    # Sentiment analysis
-    sentiment_score_list, score_to_comment_dict_ = get_sentiment_data(
-        all_video_sentiment_list
-    )
+
+    if os.path.exists(sentiment_pkl_f): 
+        sentiment_score_list, score_to_comment_dict_ = pickle.load(open(sentiment_pkl_f,'rb'))
+    else : 
+        # Sentiment analysis
+        sentiment_score_list, score_to_comment_dict_ = get_sentiment_data(
+            all_video_sentiment_list
+        )
+        pickle.dump([sentiment_score_list, score_to_comment_dict_], open(sentiment_pkl_f,'wb')) 
 
     score_to_comment_dict = {}
     for k, v in score_to_comment_dict_.items():
-        # random.shuffle(v)
+        random.shuffle(v)
         score_to_comment_dict[k] = v[:100]
-    score_to_comment_dict_ = {}
-    # sentiment_score_list = []
-    # score_to_comment_dict = {"asdfa" :"asdfsdf"}
+
+
     return render_template(
         "sentiment.html",
         sentiment_score_list=sentiment_score_list,

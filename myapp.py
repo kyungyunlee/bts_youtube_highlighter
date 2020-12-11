@@ -219,7 +219,7 @@ def overall_sentiment():
 
     score_to_comment_dict = {}
     for k, v in score_to_comment_dict_.items():
-        random.shuffle(v)
+        # random.shuffle(v)
         score_to_comment_dict[k] = v[:100]
     score_to_comment_dict_ = {}
     # sentiment_score_list = []
@@ -288,7 +288,7 @@ def general_analysis():
 
     score_to_comment_dict = {}
     for k, v in score_to_comment_dict_.items():
-        random.shuffle(v)
+        # random.shuffle(v)
         score_to_comment_dict[k] = v[:100]
     score_to_comment_dict_ = {}
     # sentiment_score_list = []

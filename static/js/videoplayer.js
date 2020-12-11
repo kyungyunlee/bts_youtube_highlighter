@@ -50,8 +50,8 @@ function onPlayerStateChange(event) {
   // })
   var currentTime = player.getCurrentTime();
   currentTime = Math.round(currentTime).toString();
-  console.log(currentTime);
-
+  
+  /* 
   $.ajax({
     type: "POST",
     contentType: "application/json;charset=utf-8",
@@ -60,23 +60,35 @@ function onPlayerStateChange(event) {
     data: JSON.stringify({ currentTime }),
     // dataType: "json",
     success: function (response) {
+      console.log("change");
       if (comment_dict[currentTime] !== undefined) {
-        $("#comments").text(comment_dict[currentTime]);
+        $("#timestamp_comments").text(comment_dict[currentTime]);
       }
     },
   });
+  */
+  $("#timestamp_comments").text(comment_dict[currentTime]);
+  
+  /*
+  $.post("/video/" + player_elem.textContent,  {
+     javascript_data: currentTime
+  });
+  */
 
   if (player.getPlayerState() == 1) {
     console.log("playing");
     interval_function = setInterval(doAjax, interval);
-  } else {
+  } 
+   else {
+     console.log("stop")
     clearTimeout(interval_function);
-  }
+   }
 }
 
 function doAjax() {
   var currentTime = player.getCurrentTime();
   currentTime = Math.round(currentTime).toString();
+  /*
   $.ajax({
     type: "POST",
     url: "/video/" + player_elem.textContent,
@@ -86,11 +98,20 @@ function doAjax() {
     // dataType: 'json',
     traditional: "true",
     success: function (data) {
+      console.log("ajaxadfasdf")
       if (comment_dict[currentTime] !== undefined) {
-        $("#comments").text(comment_dict[currentTime]);
+        $("#timestamp_comments").text(comment_dict[currentTime]);
       }
     },
   });
+  */
+  $("#timestamp_comments").text(comment_dict[currentTime]);
+
+  /*
+  $.post("/video/" + player_elem.textContent,  {
+     javascript_data: currentTime
+  });
+  */
 }
 
 function plot_hist(duration) {

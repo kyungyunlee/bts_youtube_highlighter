@@ -319,7 +319,14 @@ def show_video_data(youtube_id):
     curr_comment = yt_id_to_comment_dict[youtube_id]
     timestamp_list = get_timestamp_list(curr_comment)
     n_comments = len(timestamp_list)
-
+    
+    '''
+    timestamp_comment = ""
+    if request.method == 'POST': 
+        jsdata = request.form['javascript_data']
+        if jsdata in curr_comment.keys():
+            timestamp_comment = curr_comment[jsdata]
+    '''
     comment_list = []
     for k, v in curr_comment.items():
         for v_ in v:
@@ -335,7 +342,8 @@ def show_video_data(youtube_id):
             for row in reader:
                 _, _, _, sentiment_score = row
                 sentiments.append(round(float(sentiment_score), 1))
-
+    
+    
     return render_template(
         "video.html",
         playlist_list=playlist_to_vid,
@@ -345,10 +353,11 @@ def show_video_data(youtube_id):
         n_comments=n_comments,
         keywords=keywords,
         sentiments=sentiments,
+        # timestamp_comment=timestamp_comment
     )
 
 
 if __name__ == "__main__":
     # app.jinja_env.cache = {}
 
-    app.run()# use_reloader=True)
+    app.run(debug=True, use_reloader=True)

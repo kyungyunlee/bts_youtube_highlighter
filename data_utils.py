@@ -150,7 +150,7 @@ def create_word_frequency_table(comment_list):
 
 
 def get_sentiment_data(f_list):
-    print(len(f_list))
+    # print(len(f_list))
     all_scores = []
     score_dict = defaultdict(list)
     for fname in f_list:

@@ -210,6 +210,7 @@ def overall_keywords():
 
 
 @app.route("/main/sentiment")
+@cache.cached(timeout=50)
 def overall_sentiment():
 
     # Sentiment analysis
@@ -226,84 +227,6 @@ def overall_sentiment():
     # score_to_comment_dict = {"asdfa" :"asdfsdf"}
     return render_template(
         "sentiment.html",
-        sentiment_score_list=sentiment_score_list,
-        sentiment_score_dict=score_to_comment_dict,
-    )
-
-
-@app.route("/analysis")
-@cache.cached(timeout=50)
-def general_analysis():
-    global word_freq_list
-
-    n_videos = len(all_video_fs)
-    avg_comments = round(sum(n_comments_list) / len(n_comments_list), 1)
-
-    #######  Most commented video ########
-    """
-    # Per video, thumbnail, number of comment counts
-    sorted_vid = sorted(all_video_comment_list, key=lambda x: x[2], reverse=True)
-
-    most_commented_videos = []
-    for vid in sorted_vid[:10]:
-        most_commented_videos.append((vid[0], Path(vid[1]).stem, vid[2]))
-    """
-
-    ########  Most commented scenes #########
-    # Per clip, get a thumbnail gif, title, display keywords, number of comments, sample comments
-    sorted_comment = sorted(all_ts_comment_list, key=lambda x: x[3], reverse=True)
-    print(len(sorted_comment))
-    most_commented_scenes = []
-    for vid in sorted_comment[:30]:
-        curr_title = vid[0]
-        curr_yt_id = Path(vid[1]).stem
-        curr_timestamp = vid[2]
-        curr_n_comments = vid[3]
-        curr_comments = yt_id_to_comment_dict[curr_yt_id][curr_timestamp]
-        # subtract 3 seconds for the video start time
-        curr_timestamp = str(int(curr_timestamp) - 3)
-        # convert to min:ss
-        m = int(curr_timestamp) // 60
-        s = int(curr_timestamp) - (60 * m)
-        curr_timestamp_str = "%02d:%02d" % (m, s)
-        most_commented_scenes.append(
-            (
-                curr_title,
-                curr_yt_id,
-                curr_timestamp,
-                curr_timestamp_str,
-                curr_n_comments,
-                curr_comments,
-            )
-        )
-
-    # Top N keywords
-    keywords = word_freq_list[:50]
-
-    # Sentiment analysis
-    start = time.time()
-    sentiment_score_list, score_to_comment_dict_ = get_sentiment_data(
-        all_video_sentiment_list
-    )
-
-    score_to_comment_dict = {}
-    for k, v in score_to_comment_dict_.items():
-        # random.shuffle(v)
-        score_to_comment_dict[k] = v[:100]
-    score_to_comment_dict_ = {}
-    # sentiment_score_list = []
-    # score_to_comment_dict = {"asdfa" :"asdfsdf"}
-    print("sentiment data time", time.time() - start)
-
-    return render_template(
-        "analysis.html",
-        n_videos=n_videos,
-        n_comments=sum(n_comments_list),
-        avg_comments=avg_comments,
-        # most_commented_videos=most_commented_videos,
-        most_commented_scenes=most_commented_scenes,
-        keywords=keywords,
-        wordcloud_f=wordcloud_f,
         sentiment_score_list=sentiment_score_list,
         sentiment_score_dict=score_to_comment_dict,
     )

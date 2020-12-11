@@ -37,7 +37,7 @@ all_ts_comment_list = (
 all_video_sentiment_list = []  # list of video sentiment data files
 yt_id_to_comment_dict = {}
 word_freq_list = []
-wordcloud_f = "static/wordcloud.png"
+wordcloud_f = "/static/wordcloud.png"
 sentiment_pkl_f = "static/sentiment_score.pkl"
 
 
@@ -167,6 +167,7 @@ def overview():
 
 
 @app.route("/main/moments/<idx>")
+@cache.cached(timeout=300)
 def notable_moments(idx):
 
     ########  Most commented scenes #########
@@ -211,6 +212,7 @@ def overall_keywords():
 
 
 @app.route("/main/sentiment")
+@cache.cached(timeout=60)
 def overall_sentiment():
 
 
